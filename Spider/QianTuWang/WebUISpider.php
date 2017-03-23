@@ -95,11 +95,11 @@ class WebUISpider extends BasicSpider {
                 ));
             }
             $this->getProgress()->success($pageLink);
-            $this->setUIVal('IndexPageCurrentIndex', $currentPage);
             $currentPage ++;
-        }while (0 !== $totalPage && $currentPage <= $totalPage );
+            $this->setUIVal('IndexPageCurrentIndex', $currentPage);
+        }while (0 == $totalPage || (0 !== $totalPage && $currentPage <= $totalPage) );
         
-        $this->getProgress()->doneTarget($link, Progress::STATUS_SUCCESS);
+        $this->getProgress()->success($link, Progress::STATUS_SUCCESS);
     }
     
     /** @return void */
