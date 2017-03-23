@@ -26,11 +26,11 @@ class WebUISpider extends BasicSpider {
         $this->setUIVal('TopLinkCount', count($topLinks));
         
         foreach ( $topLinks as $index => $topLink ) {
+            $this->setUIVal('TopLinkCurrentIndex', $index+1);
             if ( $this->getProgress()->hasProcessed($topLink) ) {
                 continue;
             }
             $this->processTopLink($topLink);
-            $this->setUIVal('TopLinkCurrentIndex', $index+1);
         }
     }
     
@@ -47,6 +47,7 @@ class WebUISpider extends BasicSpider {
                 continue;
             }
             
+            $this->setUIVal('IndexPageCurrentIndex', $currentPage);
             $this->getProgress()->addTarget($pageLink, 'INDEX_PAGE');
             $client = new \GuzzleHttp\Client();
             try {
@@ -96,7 +97,6 @@ class WebUISpider extends BasicSpider {
             }
             $this->getProgress()->success($pageLink);
             $currentPage ++;
-            $this->setUIVal('IndexPageCurrentIndex', $currentPage);
         }while (0 == $totalPage || (0 !== $totalPage && $currentPage <= $totalPage) );
         
         $this->getProgress()->success($link, Progress::STATUS_SUCCESS);
