@@ -1,4 +1,8 @@
+# IDE files.
 .buildpath
 .project
 .settings
+
+# Runtime files.
 Spider/*/Data/*
+!Spider/*/Data/Readme.txt
